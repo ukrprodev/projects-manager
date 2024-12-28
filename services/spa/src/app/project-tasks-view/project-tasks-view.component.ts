@@ -6,7 +6,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon';
 import {ProjectTasksInterface} from '../../interfaces/projects/project-tasks.interface';
 import {filter} from 'rxjs';
-import {NgFor, NgIf} from '@angular/common';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-project-tasks-view',
@@ -16,8 +16,7 @@ import {NgFor, NgIf} from '@angular/common';
     MatButtonModule,
     MatTableModule,
     MatIconModule,
-    NgIf,
-    NgFor
+    NgIf
   ],
   standalone: true,
   providers: [ProjectsService]
