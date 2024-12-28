@@ -18,7 +18,7 @@ This is a simplified Laravel and Angular project to showcase database logic and 
 ### Steps to Run:
 1. Clone this repository and navigate to the project directory:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/ukrprodev/projects-manager.git
    cd projects-manager
    ```
 
