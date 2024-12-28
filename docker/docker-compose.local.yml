@@ -23,8 +23,13 @@ services:
     expose:
       - 9000
 #    command: php-fpm
-    command: sh -c "composer i; php artisan migrate --seed"
-
+    command: >
+      sh -c "
+      composer install &&
+      cp .env.example .env &&
+      php artisan key:generate &&
+      php artisan migrate --seed
+      "
 
   pm-local-server:
     container_name: pm-local-server
