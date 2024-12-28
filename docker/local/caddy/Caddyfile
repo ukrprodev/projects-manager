@@ -1,0 +1,11 @@
+api.projects-manager.local {
+    root * /var/www/api/public
+    encode zstd gzip
+    php_fastcgi pm-local-api:9000
+
+    file_server
+}
+
+projects-manager.local {
+    reverse_proxy pm-local-spa:8080
+}

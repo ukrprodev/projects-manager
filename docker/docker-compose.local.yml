@@ -1,0 +1,53 @@
+version: '3.8'
+
+networks:
+  pm-local-network:
+    driver: bridge
+    name: pm-local-network
+
+volumes:
+  pm-local-server-config:
+    name: pm-local-server-config
+  pm-local-server-data:
+    name: pm-local-server-data
+
+services:
+  pm-local-api:
+    container_name: pm-local-api
+    image: devilbox/php-fpm:8.2-work
+    networks:
+      - pm-local-network
+    volumes:
+      - ../services/api:/var/www/api
+    working_dir: /var/www/api
+    expose:
+      - 9000
+#    command: php-fpm
+    command: sh -c "composer i; php artisan migrate --seed"
+
+
+  pm-local-server:
+    container_name: pm-local-server
+    image: caddy/caddy:latest
+    networks:
+      - pm-local-network
+    volumes:
+      - ../services/api:/var/www/api
+      - ./local/caddy:/etc/caddy
+      - pm-local-server-config:/config
+      - pm-local-server-data:/data
+    ports:
+      - "80:80"
+      - "443:443"
+
+  pm-local-spa:
+    container_name: pm-local-spa
+    image: node:23.5.0-alpine
+    networks:
+      - pm-local-network
+    volumes:
+      - ../services/spa:/var/www/spa
+    working_dir: /var/www/spa
+    command: sh -c "npm i -g @angular/cli; npm i; ng serve --host 0.0.0.0 --port 8080 --watch"
+    ports:
+      - "8080:8080"
