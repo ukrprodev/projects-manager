@@ -28,21 +28,32 @@ This is a simplified Laravel and Angular project to showcase database logic and 
    sudo docker-compose -f docker-compose.local.yml -p projects-manager up -d
    ```
 
-3. If `composer install` fails with database seeding:
-    - Remove the `command` from the `pm-local-api` container in `docker-compose.local.yml`.
-    - Access the container manually and run the commands:
-      ```bash
-      docker exec -it pm-local-api sh
-      composer i
-      php artisan migrate --seed
-      ```
-
-4. For the frontend (Angular 19), ensure dependencies are installed:
+3. For the frontend (Angular 19), ensure dependencies are installed:
    ```bash
    cd ../services/spa
    npm i
    npm start
    ```
+
+---
+
+## Troubleshooting
+
+### If `composer install` fails with database seeding:
+- In the `docker-compose.local.yml` file, update the `pm-local-api` service: Replace this line:
+  ```bash
+  command: sh -c "composer i; php artisan migrate --seed"
+  ```
+  with
+  ```bash
+  #    command: php-fpm
+  ```
+- Then manually run the following commands:
+  ```bash
+  docker exec -it pm-local-api sh
+  composer i
+  php artisan migrate --seed
+  ```
 
 ---
 
@@ -59,5 +70,5 @@ This is a simplified Laravel and Angular project to showcase database logic and 
 ![Assigned Projects for Stuart](./screenshots/3.png)
 ![Assigned Projects for Lan](./screenshots/4.png)
 
-### Docker Containers
+### Docker
 ![Portainer](./screenshots/6.png)
