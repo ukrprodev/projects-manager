@@ -20,16 +20,9 @@ services:
     volumes:
       - ../services/api:/var/www/api
     working_dir: /var/www/api
+    entrypoint: ["/bin/bash", "/var/www/api/setup.sh"]
     expose:
       - 9000
-#    command: php-fpm
-    command: >
-      sh -c "
-      composer install &&
-      cp .env.example .env &&
-      php artisan key:generate &&
-      php artisan migrate --seed
-      "
 
   pm-local-server:
     container_name: pm-local-server

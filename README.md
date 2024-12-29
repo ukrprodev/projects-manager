@@ -22,38 +22,16 @@ This is a simplified Laravel and Angular project to showcase database logic and 
    cd projects-manager
    ```
 
-2. Start the Docker containers:
+2. Ensure the `setup.sh` script in `services/api` has executable permissions:
+   ```bash
+   chmod +x services/api/setup.sh
+   ```
+
+3. Start the Docker containers:
    ```bash
    cd docker
    sudo docker-compose -f docker-compose.local.yml -p projects-manager up -d
    ```
-
-3. For the frontend (Angular 19), ensure dependencies are installed:
-   ```bash
-   cd ../services/spa
-   npm i
-   npm start
-   ```
-
----
-
-## Troubleshooting
-
-### If `composer install` fails with database seeding:
-- In the `docker-compose.local.yml` file, update the `pm-local-api` service: Replace this line:
-  ```bash
-  command: sh -c "composer i; php artisan migrate --seed"
-  ```
-  with
-  ```bash
-  #    command: php-fpm
-  ```
-- Then manually run the following commands:
-  ```bash
-  docker exec -it pm-local-api sh
-  composer i
-  php artisan migrate --seed
-  ```
 
 ---
 
